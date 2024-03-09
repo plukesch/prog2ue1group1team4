@@ -43,6 +43,9 @@ public class MovieCell extends ListCell<Movie> {
             }
             genresLabel.setText(genresText.toString());
 
+            //Ändert die Farbe vom GenreLabel auf weis
+            genresLabel.setStyle("-fx-text-fill: #FFFFFF;");
+
 
             // color scheme
             title.getStyleClass().add("text-yellow");
