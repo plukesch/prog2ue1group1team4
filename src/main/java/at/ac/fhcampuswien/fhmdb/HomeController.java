@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class HomeController implements Initializable {
     @FXML
@@ -27,7 +28,7 @@ public class HomeController implements Initializable {
     public JFXListView movieListView;
 
     @FXML
-    public JFXComboBox genreComboBox;
+    public JFXComboBox<String> genreComboBox;
 
     @FXML
     public JFXButton sortBtn;
@@ -38,30 +39,45 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        observableMovies.addAll(allMovies);         // add dummy data to observable list
+        observableMovies.addAll(allMovies);
+        movieListView.setItems(observableMovies);
+        movieListView.setCellFactory(movieListView -> new MovieCell());
 
-        // initialize UI stuff
-        movieListView.setItems(observableMovies);   // set data of observable list to list view
-        movieListView.setCellFactory(movieListView -> new MovieCell()); // use custom cell factory to display data
-
+        // Populate the genre ComboBox
+        genreComboBox.getItems().addAll("Action", "Comedy", "Drama", "Crime", "Science Fiction", "Sport", "Thriller", "Mystery", "Romance", "Musical", "Western", "Adventure"); // Add all relevant genres here
         genreComboBox.setPromptText("Filter by Genre");
 
-        genreComboBox.getItems().addAll("ACTION", "ADVENTURE", "COMEDY", "CRIME", "DRAMA", "MUSICAL", "MYSTERY", "ROMANCE", "SCIENCE-FICTION", "SPORT", "THRILLER", "WESTERN");
+        // Add action listeners
+        searchBtn.setOnAction(event -> applyFilters());
+        genreComboBox.setOnAction(event -> applyFilters());
+        sortBtn.setOnAction(event -> toggleSort());
 
-        // TODO add event handlers to buttons and call the regarding methods
-        // either set event handlers in the fxml file (onAction) or add them here
+        sortBtn.setText("Sort (asc)");
+    }
 
-        // Sort button example:
-        sortBtn.setOnAction(actionEvent -> {
-            if(sortBtn.getText().equals("Sort (asc)")) {
-                observableMovies.sort(Comparator.comparing(Movie::getTitle));
-                sortBtn.setText("Sort (desc)");
-            } else {
-                observableMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
-                sortBtn.setText("Sort (asc)");
-            }
-        });
+    private void applyFilters() {
+        String searchText = searchField.getText().toLowerCase();
+        String selectedGenreName = genreComboBox.getSelectionModel().getSelectedItem();
+
+        List<Movie> filteredMovies = allMovies.stream()
+                .filter(movie -> movie.getTitle().toLowerCase().contains(searchText) ||
+                        (movie.getDescription() != null && movie.getDescription().toLowerCase().contains(searchText)))
+                .filter(movie -> selectedGenreName == null ||
+                        movie.getGenres().stream().anyMatch(genre -> genre.getName().equalsIgnoreCase(selectedGenreName)))
+                .collect(Collectors.toList());
+
+        observableMovies.setAll(filteredMovies);
+    }
 
 
+    private void toggleSort() {
+        Comparator<Movie> comparator = Comparator.comparing(Movie::getTitle);
+        if (sortBtn.getText().equals("Sort (asc)")) {
+            FXCollections.sort(observableMovies, comparator);
+            sortBtn.setText("Sort (desc)");
+        } else {
+            FXCollections.sort(observableMovies, comparator.reversed());
+            sortBtn.setText("Sort (asc)");
+        }
     }
 }
