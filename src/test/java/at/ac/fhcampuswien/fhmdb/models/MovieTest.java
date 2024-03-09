@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MovieTest {
 
     @Test
-    public void testGetTitle() {
+    public void test_GetTitle() {
         //Given
         Movie movie = new Movie("The Wolf of Wall Street", "Based on the true story of Jordan Belfort, from his rise to a wealthy stock-broker living the high life to his fall involving crime, corruption and the federal government.", List.of(new Genre("Crime"), new Genre("Comedy")));
 
@@ -18,7 +18,7 @@ class MovieTest {
         assertEquals("The Wolf of Wall Street", movie.getTitle());
     }
     @Test
-    public void testGetDescription() {
+    public void test_GetDescription() {
         //Given
         Movie movie = new Movie("The Wolf of Wall Street", "Based on the true story of Jordan Belfort, from his rise to a wealthy stock-broker living the high life to his fall involving crime, corruption and the federal government.", List.of(new Genre("Crime"), new Genre("Comedy")));
 
@@ -27,7 +27,7 @@ class MovieTest {
     }
 
     @Test
-    public void testGetGenres() {
+    public void test_GetGenres() {
         //Given
         List<Genre> expectedGenres = new ArrayList<>();
         expectedGenres.add(new Genre("Science Fiction"));
