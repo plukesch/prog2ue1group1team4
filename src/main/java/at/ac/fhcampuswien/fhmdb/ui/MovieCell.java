@@ -9,6 +9,8 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+import java.util.stream.Collectors;
+
 public class MovieCell extends ListCell<Movie> {
     private final Label title = new Label();
     private final Label detail = new Label();
@@ -23,6 +25,7 @@ public class MovieCell extends ListCell<Movie> {
         } else {
             this.getStyleClass().add("movie-cell");
             title.setText(movie.getTitle());
+
             detail.setText(
                     movie.getDescription() != null
                             ? movie.getDescription()
