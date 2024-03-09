@@ -36,6 +36,7 @@ public class HomeController implements Initializable {
     public List<Movie> allMovies = Movie.initializeMovies();
 
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
+    public JFXButton clearBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -52,7 +53,18 @@ public class HomeController implements Initializable {
         genreComboBox.setOnAction(event -> applyFilters());
         sortBtn.setOnAction(event -> toggleSort());
 
+        clearBtn.setOnAction(event -> clearFilters());
+
         sortBtn.setText("Sort (asc)");
+    }
+
+    private void clearFilters() {
+        // Clearing the search text and genre selection
+        searchField.setText("");
+        genreComboBox.getSelectionModel().clearSelection();
+
+        // Resetting the list to show all movies
+        observableMovies.setAll(allMovies);
     }
 
     private void applyFilters() {
