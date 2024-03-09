@@ -92,4 +92,13 @@ public class HomeController implements Initializable {
             sortBtn.setText("Sort (asc)");
         }
     }
+
+    public List<Movie> filterMovies(String searchText, String selectedGenreName, List<Movie> movies) {
+        return movies.stream()
+                .filter(movie -> searchText.isEmpty() || movie.getTitle().toLowerCase().contains(searchText) ||
+                        (movie.getDescription() != null && movie.getDescription().toLowerCase().contains(searchText)))
+                .filter(movie -> selectedGenreName == null ||
+                        movie.getGenres().stream().anyMatch(genre -> genre.getName().equalsIgnoreCase(selectedGenreName)))
+                .collect(Collectors.toList());
+    }
 }
