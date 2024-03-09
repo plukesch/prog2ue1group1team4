@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GenreTest {
 
     @Test
-    public void testGetName() {
+    public void test_GetName() {
         //given
         String expectedName = "Action";
         Genre genre = new Genre(expectedName);
