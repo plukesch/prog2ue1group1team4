@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 public class MovieCell extends ListCell<Movie> {
     private final Label title = new Label();
     private final Label detail = new Label();
-    private final VBox layout = new VBox(title, detail);
+    private final Label genresLabel = new Label();
+    private final VBox layout = new VBox(title, detail, genresLabel);
 
     @Override
     protected void updateItem(Movie movie, boolean empty) {
@@ -31,6 +32,16 @@ public class MovieCell extends ListCell<Movie> {
                             ? movie.getDescription()
                             : "No description available"
             );
+
+
+            StringBuilder genresText = new StringBuilder("Genres: ");
+            for (int i = 0; i < movie.getGenres().size(); i++) {
+                if (i > 0) {
+                    genresText.append(", ");
+                }
+                genresText.append(movie.getGenres().get(i).getName());
+            }
+            genresLabel.setText(genresText.toString());
 
 
             // color scheme
