@@ -13,7 +13,7 @@ public class Movie {
         this.title = title;
         this.description = description;
         this.year = year;
-        this.description = description;
+        this.rating = rating;
     }
 
     public String getTitle() {
