@@ -11,6 +11,7 @@ public class Movie {
     public Movie(String title, String description, List<Genre> genres) {
         this.title = title;
         this.description = description;
+        //Noah Kommentiert noch diese Zeile
         this.genres = genres != null ? genres : new ArrayList<>();
     }
 
@@ -26,6 +27,10 @@ public class Movie {
         return genres;
     }
 
+    /**
+     * List of all movies in the FhmdbApplication
+     * @return
+     */
     public static List<Movie> initializeMovies() {
         List<Movie> movies = new ArrayList<>();
         movies.add(new Movie("The Wolf of Wall Street", "Based on the true story of Jordan Belfort, from his rise to a wealthy stock-broker living the high life to his fall involving crime, corruption and the federal government.", List.of(new Genre("Crime"), new Genre("Comedy"))));

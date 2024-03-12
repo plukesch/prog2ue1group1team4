@@ -38,6 +38,11 @@ public class HomeController implements Initializable {
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
     public JFXButton clearBtn;
 
+    /**
+     * Noah Kommentar
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         observableMovies.addAll(allMovies);
@@ -58,6 +63,9 @@ public class HomeController implements Initializable {
         sortBtn.setText("Sort (asc)");
     }
 
+    /**
+     * Noah Kommenatr
+     */
     private void clearFilters() {
         // Clearing the search text and genre selection
         searchField.setText("");
@@ -67,6 +75,9 @@ public class HomeController implements Initializable {
         observableMovies.setAll(allMovies);
     }
 
+    /**
+     * Noah Kommentar
+     */
     private void applyFilters() {
         String searchText = searchField.getText().toLowerCase();
         String selectedGenreName = genreComboBox.getSelectionModel().getSelectedItem();
@@ -81,7 +92,9 @@ public class HomeController implements Initializable {
         observableMovies.setAll(filteredMovies);
     }
 
-
+    /**
+     * Noah Kommentar
+     */
     private void toggleSort() {
         Comparator<Movie> comparator = Comparator.comparing(Movie::getTitle);
         if (sortBtn.getText().equals("Sort (asc)")) {
@@ -93,6 +106,14 @@ public class HomeController implements Initializable {
         }
     }
 
+    /**
+     * Noah Kommentar
+     * Nur für JUnitTest
+     * @param searchText
+     * @param selectedGenreName
+     * @param movies
+     * @return
+     */
     public List<Movie> filterMovies(String searchText, String selectedGenreName, List<Movie> movies) {
         return movies.stream()
                 .filter(movie -> searchText.isEmpty() || movie.getTitle().toLowerCase().contains(searchText) ||
