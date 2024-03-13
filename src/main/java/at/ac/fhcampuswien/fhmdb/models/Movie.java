@@ -11,7 +11,7 @@ public class Movie {
     public Movie(String title, String description, List<Genre> genres) {
         this.title = title;
         this.description = description;
-        //Noah Kommentiert noch diese Zeile
+        // Initialize the genres list: assign the provided genres list if it's not null, otherwise initialize with an empty list
         this.genres = genres != null ? genres : new ArrayList<>();
     }
 
@@ -29,7 +29,6 @@ public class Movie {
 
     /**
      * List of all movies in the FhmdbApplication
-     * @return
      */
     public static List<Movie> initializeMovies() {
         List<Movie> movies = new ArrayList<>();
