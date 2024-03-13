@@ -91,4 +91,61 @@ class HomeControllerTest {
             i++;
         }
     }
+
+    @Test
+    void does_searching_words_in_synopsis_filter_the_correct_movie() {
+        // Given
+        HomeController controller = new HomeController();
+        List<Movie> allMovies = Movie.initializeMovies();
+
+        // When
+        List<Movie> filteredMovies = controller.filterMovies("dramatic", null, allMovies);
+
+        // Then
+        assertEquals(1, filteredMovies.size());
+        assertEquals("Oppenheimer", filteredMovies.get(0).getTitle());
+    }
+
+    @Test
+    void can_you_search_movies_using_partial_words() {
+        // Given
+        HomeController controller = new HomeController();
+        List<Movie> allMovies = Movie.initializeMovies();
+
+        // When
+        List<Movie> filteredMovies = controller.filterMovies("dram", null, allMovies);
+
+        // Then
+        assertEquals(1, filteredMovies.size());
+        assertEquals("Oppenheimer", filteredMovies.get(0).getTitle());
+    }
+
+    @Test
+    void can_you_search_for_your_movie_using_partial_title() {
+        // Given
+        HomeController controller = new HomeController();
+        List<Movie> allMovies = Movie.initializeMovies();
+
+        // When
+        List<Movie> filteredMovies = controller.filterMovies("scar", null, allMovies);
+
+        // Then
+        assertEquals(1, filteredMovies.size());
+        assertEquals("Scarface", filteredMovies.get(0).getTitle());
+    }
+
+    @Test
+    void wrong_title_wrong_genre_gives_empty_result() {
+        // Given
+        HomeController controller = new HomeController();
+        List<Movie> allMovies = Movie.initializeMovies();
+
+        // When
+        List<Movie> filteredMovies = controller.filterMovies("Oppenheimer", "Fantasy", allMovies);
+
+        // Then
+        assertTrue(filteredMovies.isEmpty(), "No movies should match the provided filter and title");
+    }
+
+
 }
